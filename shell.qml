@@ -1,4 +1,4 @@
-import qs.modules.top_bar
+import qs.modules.topbar
 import qs.modules.desktopview
 import qs.modules.dockview
 import qs.modules.applistview
