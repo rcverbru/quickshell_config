@@ -1,4 +1,3 @@
-import "root:/modules/common/"
 import QtQuick
 import Quickshell
 pragma Singleton

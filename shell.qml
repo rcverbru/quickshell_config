@@ -1,7 +1,7 @@
-import "root:/modules/top-bar"
-import "root:/modules/desktopview"
-import "root:/modules/dockview"
-import "root:/modules/applistview"
+import qs.modules.top_bar
+import qs.modules.desktopview
+import qs.modules.dockview
+import qs.modules.applistview
 import QtQuick
 import Quickshell
 

@@ -1,5 +1,5 @@
-import "root:/"
-import "root:/modules/common"
+import qs
+import qs.modules.common
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -30,7 +30,7 @@ Scope {
     target: "dockview"
 
     function toggle(): void {
-      GlobalStates.desktopViewOpen = !GlobalStates.dockViewOpen;
+      GlobalStates.dockViewOpen = !GlobalStates.dockViewOpen;
     }
 
     function open(): void {
