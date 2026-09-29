@@ -1,4 +1,4 @@
-// modules/datetimepanel/Calendar.qml
+// modules/dashboard/Calendar.qml
 import QtQuick
 import Quickshell
 import QtQuick.Layouts

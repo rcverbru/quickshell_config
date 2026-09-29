@@ -1,4 +1,4 @@
-// modules/datetimepanel/Reminders.qml
+// modules/dashboard/Reminders.qml
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls

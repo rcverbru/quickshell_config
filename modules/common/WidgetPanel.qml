@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell.Wayland
-import qs.modules.datetimepanel
+import qs.modules.dashboard
 import qs.theme as Theme
 
 PanelWindow {

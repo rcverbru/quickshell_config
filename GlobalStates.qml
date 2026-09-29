@@ -7,6 +7,5 @@ Singleton {
     id: root
     property bool overviewOpen: false
     property bool desktopViewOpen: false
-    property bool dockViewOpen: false
     property bool appListOpen: false
 }

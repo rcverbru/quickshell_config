@@ -1,14 +1,14 @@
-import qs.modules.topbar
 import qs.modules.desktopview
-import qs.modules.dockview
 import qs.modules.applistview
+import qs.modules.drawers
 import QtQuick
 import Quickshell
 
 ShellRoot {
   id: root
 
-  TopBar {}
-  DesktopView {}
-  AppListView {}
+  Drawers {}
+  // TopBar {}
+  // DesktopView {}
+  // AppListView {}
 }
