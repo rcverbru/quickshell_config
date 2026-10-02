@@ -15,7 +15,7 @@ Singleton {
     property QtObject font
     property QtObject sizes
 
-    property real transparency: 0.5
+    property real transparency: 0.1
     property real contentTransparency: 0.1
     property real workpaceTransparency: 0.8
     property string background_image: Directories.config + "/hypr/rofi/.current_wallpaper"
@@ -190,7 +190,7 @@ Singleton {
 
     sizes: QtObject {
         property real barHeight: 40
-        property real barWidth: 100
+        property real barWidth: 80
         property real notificationPopupWidth: 410
         property real searchWidthCollapsed: 260
         property real searchWidth: 450

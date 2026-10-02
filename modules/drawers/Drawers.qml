@@ -58,6 +58,13 @@ Variants {
           }
         }
       }
+      ConcaveCurves {
+        anchors.top: topBar.bottom
+        anchors.left: sideBar.right
+        radius: 16
+        isTop: true
+        z: 1
+      }
     }
   }
 

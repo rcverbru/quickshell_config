@@ -19,14 +19,37 @@ Item {
 
     // Top
     ColumnLayout {
-      id: leftCluster
+      id: topCluster
       anchors.left: parent.left
-      anchors.leftMargin: 6
-      anchors.verticalCenter: parent.verticalTop
-      width: parent.width
+      anchors.right: parent.right
+      anchors.top: parent.top
+      anchors.margins: 10
       spacing: 10
 
+    }
 
+    // Mid
+    ColumnLayout {
+      id: midCluster
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.margins: 10
+      spacing: 10
+
+    }
+
+    // Bottom
+    ColumnLayout {
+      id: botCluster
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      anchors.margins: 10
+      spacing: 10
+
+      Battery {}
+      Clock {}
     }
   }
 }
