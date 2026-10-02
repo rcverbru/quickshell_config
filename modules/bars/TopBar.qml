@@ -5,6 +5,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Networking
 
 Item {
   id: root
@@ -43,7 +44,6 @@ Item {
         precision: SystemClock.Seconds
       }
       StyledText {
-        anchors.centerIn: parent
         text: Qt.formatDateTime(clock.date, "hh:mm:ss  -  ddd, MMM d")
       }
       // readonly property real sideW: Math.max(leftContent.implicitWidth, rightContent.implicitWidth)

@@ -17,14 +17,15 @@ Item {
 
     color: Appearance.colors.colLayer0
 
-    // Left
-    RowLayout {
+    // Top
+    ColumnLayout {
       id: leftCluster
       anchors.left: parent.left
       anchors.leftMargin: 6
-      anchors.verticalCenter: parent.verticalCenter
-      height: parent.height
+      anchors.verticalCenter: parent.verticalTop
+      width: parent.width
       spacing: 10
+
 
     }
   }

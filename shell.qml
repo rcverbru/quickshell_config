@@ -9,6 +9,6 @@ ShellRoot {
 
   Drawers {}
   // TopBar {}
-  // DesktopView {}
+  DesktopView {}
   // AppListView {}
 }

@@ -190,6 +190,7 @@ Singleton {
 
     sizes: QtObject {
         property real barHeight: 40
+        property real barWidth: 100
         property real notificationPopupWidth: 410
         property real searchWidthCollapsed: 260
         property real searchWidth: 450

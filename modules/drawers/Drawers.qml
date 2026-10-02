@@ -1,19 +1,25 @@
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.modules.bars
+import qs.services
 import QtQuick
-import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 
-Scope {
-  Variants {
-    model: Quickshell.screens
+Variants {
+  model: Quickshell.screens
+
+  Scope {
+    id: scope
+    required property var modelData
+    Exclusions {
+      screen: scope.modelData
+    }
 
     PanelWindow {
-      required property var modelData
-      screen: modelData
+      screen: scope.modelData
+
       mask: Region{
         Region { item: topBar }
         Region { item: sideBar }
@@ -26,7 +32,6 @@ Scope {
         bottom: true
       }
 
-      implicitHeight: Appearance.sizes.barHeight
       color: "transparent"
 
       WlrLayershell.namespace: "quickshell:bar"
@@ -39,13 +44,25 @@ Scope {
         anchors.left: parent.left
         anchors.right: parent.right
       }
+
       SideBar { 
         id: sideBar
-        anchors.top: parent.top
+        anchors.top: topBar.bottom
         anchors.left: parent.left
         anchors.bottom: parent.bottom
+
+        MouseArea {
+          anchors.fill: parent
+          onClicked: {
+            isLeftMost(scope.modelData.name)
+          }
+        }
       }
     }
+  }
+
+  function isLeftMost(monitors: list): void {
+    console.log("Monitors: " + monitors);
   }
 }
 
