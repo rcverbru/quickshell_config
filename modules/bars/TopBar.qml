@@ -27,8 +27,7 @@ Item {
       height: parent.height
       spacing: 10
 
-      DateTime { Layout.alignment: Qt.AlignVCenter }
-      Battery  { Layout.alignment: Qt.AlignVCenter }
+      // DateTime { Layout.alignment: Qt.AlignVCenter }
     }
 
     // Center
@@ -39,13 +38,13 @@ Item {
       height: parent.height
       spacing: 6
 
-      SystemClock {
-        id: clock
-        precision: SystemClock.Seconds
-      }
-      StyledText {
-        text: Qt.formatDateTime(clock.date, "hh:mm:ss  -  ddd, MMM d")
-      }
+      // SystemClock {
+      //   id: clock
+      //   precision: SystemClock.Seconds
+      // }
+      // StyledText {
+      //   text: Qt.formatDateTime(clock.date, "hh:mm:ss  -  ddd, MMM d")
+      // }
       // readonly property real sideW: Math.max(leftContent.implicitWidth, rightContent.implicitWidth)
       //
       // Item {
@@ -102,6 +101,7 @@ Item {
       spacing: 6
 
       // RightBtn { Layout.alignment: Qt.AlignVCenter }
+      Battery  { Layout.alignment: Qt.AlignVCenter }
     }
   }
 }

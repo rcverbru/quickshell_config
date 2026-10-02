@@ -4,7 +4,7 @@ import QtQuick.Shapes
 Shape {
   id: root
 
-  property int radius: 14
+  property int radius: 20
   property color color: Appearance.colors.colLayer0
   property bool isTop: true
   property bool mirrored: false

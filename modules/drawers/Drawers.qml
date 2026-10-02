@@ -61,7 +61,7 @@ Variants {
       ConcaveCurves {
         anchors.top: topBar.bottom
         anchors.left: sideBar.right
-        radius: 16
+        radius: 20
         isTop: true
         z: 1
       }
