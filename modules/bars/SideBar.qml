@@ -48,9 +48,9 @@ Item {
       anchors.margins: 10
       spacing: 10
 
-      Battery {
-        anchors.horizontalCenter: parent.horizontalCenter
-      }
+      // Battery {
+      //   anchors.horizontalCenter: parent.horizontalCenter
+      // }
       Clock {}
     }
   }

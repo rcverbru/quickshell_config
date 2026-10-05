@@ -4,16 +4,16 @@ import Quickshell
 import qs.theme as Theme
 
 Column {
-  id: dateContent
+  id: timeContent
   anchors.centerIn: parent
   spacing: -5
 
   Text {
-    text: Qt.formatDateTime(systemClock.date, "yyyy")
+    text: Qt.formatDateTime(systemClock.date, "hh")
     font{
       family: "SF Mono"
       letterSpacing: -1
-      pixelSize: 15
+      pixelSize: 25
       weight: 600
     }
     color: Theme.Theme.text
@@ -21,11 +21,11 @@ Column {
   }
 
   Text {
-    text: Qt.formatDateTime(systemClock.date, "dd")
+    text: Qt.formatDateTime(systemClock.date, "mm:ss")
     font{
       family: "SF Mono"
       letterSpacing: -1
-      pixelSize: 25
+      pixelSize: 15
       weight: 600
     }
     color: Theme.Theme.text

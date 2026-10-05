@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Shapes
 import Quickshell
 import qs.theme as Theme
+import qs.modules.common.visual
 
 Rectangle {
   id: clock
@@ -39,90 +40,17 @@ Rectangle {
       Layout.fillWidth: true
       Layout.fillHeight: true // both halves fill → equal heights
 
-      Column {
-        id: dateContent
-        anchors.centerIn: parent
-        spacing: -5
-
-        Text {
-          text: Qt.formatDateTime(systemClock.date, "yyyy")
-          font{
-            family: "SF Mono"
-            letterSpacing: -1
-            pixelSize: 15
-            weight: 600
-          }
-          color: Theme.Theme.text
-          anchors.horizontalCenter: parent.horizontalCenter
-        }
-
-        Text {
-          text: Qt.formatDateTime(systemClock.date, "dd")
-          font{
-            family: "SF Mono"
-            letterSpacing: -1
-            pixelSize: 25
-            weight: 600
-          }
-          color: Theme.Theme.text
-          anchors.horizontalCenter: parent.horizontalCenter
-        }
-      }
+      Date {}
     }
 
-    Shape {
-      id: separator
-      Layout.fillWidth: true
-      Layout.preferredHeight: 2 // Thickness of the separator line
-
-      ShapePath {
-        strokeColor: "#999999"
-        strokeWidth: 2
-        strokeStyle: ShapePath.SolidLine // Enables dashing
-
-        startX: 0
-        startY: separator.height / 2
-        PathLine {
-          x: separator.width
-          y: separator.height / 2
-        }
-      }
-    }
+    Separator {}
 
     // Bottom half: time
     Item {
       Layout.fillWidth: true
       Layout.fillHeight: true
 
-      Column {
-        id: timeContent
-        anchors.centerIn: parent
-        spacing: -5
-
-        Text {
-          text: Qt.formatDateTime(systemClock.date, "hh")
-          font{
-            family: "SF Mono"
-            letterSpacing: -1
-            pixelSize: 25
-            weight: 600
-          }
-          color: Theme.Theme.text
-          anchors.horizontalCenter: parent.horizontalCenter
-        }
-
-        Text {
-          text: Qt.formatDateTime(systemClock.date, "mm:ss")
-          font{
-            family: "SF Mono"
-            letterSpacing: -1
-            pixelSize: 15
-            weight: 600
-          }
-          color: Theme.Theme.text
-          anchors.horizontalCenter: parent.horizontalCenter
-        }
-      }
+      Time {}
     }
   }
 

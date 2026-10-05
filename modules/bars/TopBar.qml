@@ -27,7 +27,6 @@ Item {
       height: parent.height
       spacing: 10
 
-      // DateTime { Layout.alignment: Qt.AlignVCenter }
     }
 
     // Center
@@ -38,58 +37,6 @@ Item {
       height: parent.height
       spacing: 6
 
-      // SystemClock {
-      //   id: clock
-      //   precision: SystemClock.Seconds
-      // }
-      // StyledText {
-      //   text: Qt.formatDateTime(clock.date, "hh:mm:ss  -  ddd, MMM d")
-      // }
-      // readonly property real sideW: Math.max(leftContent.implicitWidth, rightContent.implicitWidth)
-      //
-      // Item {
-      //     Layout.preferredWidth: centerCluster.sideW
-      //     Layout.minimumWidth: centerCluster.sideW
-      //     Layout.fillHeight: true
-      //     Layout.alignment: Qt.AlignVCenter
-      //
-      //     Row {
-      //         id: leftContent
-      //         anchors.right: parent.right
-      //         anchors.verticalCenter: parent.verticalCenter
-      //         spacing: 6
-      //
-      //         Memory {}
-      //         Temperature {}
-      //
-      //         Power {
-      //             powerIcon:    Qt.resolvedUrl("../assets/power_icons/power-1.svg")
-      //             lockIcon:     Qt.resolvedUrl("../assets/power_icons/lock.svg")
-      //             sleepIcon:    Qt.resolvedUrl("../assets/power_icons/moon.svg")
-      //             logoutIcon:   Qt.resolvedUrl("../assets/power_icons/log-out.svg")
-      //             rebootIcon:   Qt.resolvedUrl("../assets/power_icons/refresh-cw.svg")
-      //             shutdownIcon: Qt.resolvedUrl("../assets/power_icons/power.svg")
-      //         }
-      //     }
-      // }
-      //
-      // Workspaces { Layout.alignment: Qt.AlignVCenter }
-      //
-      // Item {
-      //     Layout.preferredWidth: centerCluster.sideW
-      //     Layout.minimumWidth: centerCluster.sideW
-      //     Layout.fillHeight: true
-      //     Layout.alignment: Qt.AlignVCenter
-      //
-      //     Row {
-      //         id: rightContent
-      //         anchors.left: parent.left
-      //         anchors.verticalCenter: parent.verticalCenter
-      //         spacing: 6
-      //
-      //         Mediaplayer { id: media }
-      //     }
-      // }
     }
 
     RowLayout {
