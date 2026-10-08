@@ -8,7 +8,7 @@ import qs.modules.common.visual
 Rectangle {
   id: clock
   // color: Appearance.colors.colLayer0
-  color: Theme.Theme.bttnbg
+  color: Theme.Theme.widget
   radius: 15
 
   implicitWidth: 70

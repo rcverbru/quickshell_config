@@ -53,7 +53,7 @@ What actually gives each shell its *look* is window architecture, not the entry 
 
 **Decided:** one fullscreen, transparent, masked `PanelWindow` per screen (caelestia's `Drawers` pattern). Goal: hover dropdowns that grow out of the bar, a sidebar, rounded frame corners.
 
-Current monitor layout (`hyprctl monitors`): `DP-6` x=0 (3440×1440) | `eDP-1` laptop x=3440 (2560×1600) | `DP-5` x=6000 (3440×1440).
+Current monitor layout (`hyprctl monitors`): left Philips x=0 (3440×1440) | `eDP-1` laptop x=3440 (2560×1600) | right Philips x=6000 (3440×1440). The externals' port names are **not stable**. They were `DP-6`/`DP-5`, and the dock (DP MST) gets new `DP-N` names on every replug (`DP-8`/`DP-7` as of 2026-10-06). Hyprland now matches them with `desc:` rules, see `~/.config/hypr/MONITOR-HOTPLUG.md`.
 
 **Structure — keep it component-per-file ("OOP" separation):**
 - `modules/drawers/Drawers.qml` — the only file that owns the `Variants` + fullscreen `PanelWindow`. Anchored to all 4 edges, `color: "transparent"`, `WlrLayer.Top`, `ExclusionMode.Ignore`. Holds the `mask`, the `isLeftmost` logic, and wires components together.
@@ -77,6 +77,7 @@ Current monitor layout (`hyprctl monitors`): `DP-6` x=0 (3440×1440) | `eDP-1` l
 - `Drawers.qml`: remove leftover `implicitHeight: Appearance.sizes.barHeight` on the fullscreen window.
 - `SideBar.qml`: width is hardcoded `implicitWidth: 100` — add `barWidth` to `Appearance.sizes` and use it (the exclusion zone needs the same value). Its `ColumnLayout` still anchors `left`/`verticalCenter`; for a vertical bar anchor `top` + `horizontalCenter`.
 - `SideBar` shows on every screen — add `isLeftmost`.
+- `Drawers.qml` `isLeftMost` stub (found 2026-10-06): the `SideBar` `MouseArea` calls `isLeftMost(scope.modelData.name)`, passing one string into `function isLeftMost(monitors: list)`, so the type doesn't match. Also, deciding "leftmost" from the screen's **name** won't work, because names change on replug (see monitor layout above). Use position (`modelData.x`, as planned in Key mechanics) and make it a `readonly property bool` binding rather than a function called on click, so it updates on hotplug by itself.
 - Delete `modules/dashboard/Content.qml` (caelestia copy, can't run here; reference it in the clone instead — `modules/dashboard/Content.qml` there).
 
 **Suggested order:**
@@ -157,4 +158,5 @@ ShellRoot {
 - **Relative JS import paths start from the importing file's own folder** — `../` = up one level, no prefix = same folder. Files not loaded by `shell.qml` (e.g. `modules/overview/`) never report bad paths, so check them by hand.
 - **Colors are strings** — `color: "transparent"`, not `color: transparent`. Unquoted, QML treats it as an undefined variable → `ReferenceError`, the binding silently fails, and the property keeps its default (a `PanelWindow` defaults to **white** — a fullscreen one whites out the screen). If a property seems to ignore what you wrote, check the log for `ReferenceError`.
 - **Change handlers are `on` + PropertyName + `Changed`** — `property bool connectionFound` → `onConnectionFoundChanged:`, not `onConnectionFound:`.
+- **Never identify a monitor by its port name** (`screen.name` / `DP-5`): the dock's names change on every replug. Use position (`x`) for layout logic, or the model/serial if you need a specific physical monitor. Comparing names at runtime (e.g. `Brightness.qml` matching the focused monitor) is fine.
 - **Anchors are per-axis** — `verticalCenter` alone leaves `x` at 0 (flush left); combine with `anchors.left` + `leftMargin`. Only anchors on the *same* axis conflict.

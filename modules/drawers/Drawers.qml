@@ -1,5 +1,6 @@
 import qs.modules.common
 import qs.modules.common.widgets
+import qs.modules.common.visual
 import qs.modules.bars
 import qs.services
 import QtQuick
@@ -58,6 +59,7 @@ Variants {
           }
         }
       }
+
       ConcaveCurves {
         anchors.top: topBar.bottom
         anchors.left: sideBar.right

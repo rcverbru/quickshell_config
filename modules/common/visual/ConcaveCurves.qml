@@ -1,11 +1,13 @@
 import QtQuick
+import qs.modules.common
+import qs.theme as Theme
 import QtQuick.Shapes
 
 Shape {
   id: root
 
   property int radius: 20
-  property color color: Appearance.colors.colLayer0
+  property color color: Theme.Theme.background
   property bool isTop: true
   property bool mirrored: false
 

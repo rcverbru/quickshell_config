@@ -1,5 +1,6 @@
 import qs.modules.common
 import qs.modules.common.widgets
+import qs.theme as Theme
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
@@ -16,7 +17,7 @@ Item {
 
     anchors.fill: parent
 
-    color: Appearance.colors.colLayer0
+    color: Theme.Theme.background
 
     // Left
     RowLayout {
