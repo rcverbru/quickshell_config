@@ -5,13 +5,12 @@ import qs.theme as Theme
 
 Column {
   id: timeContent
-  anchors.centerIn: parent
   spacing: -5
 
   Text {
     text: Qt.formatDateTime(systemClock.date, "hh")
     font{
-      family: "SF Mono"
+      family: Theme.Theme.font
       letterSpacing: -1
       pixelSize: 25
       weight: 600
@@ -23,7 +22,7 @@ Column {
   Text {
     text: Qt.formatDateTime(systemClock.date, "mm:ss")
     font{
-      family: "SF Mono"
+      family: Theme.Theme.font
       letterSpacing: -1
       pixelSize: 15
       weight: 600

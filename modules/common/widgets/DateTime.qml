@@ -7,15 +7,12 @@ import qs.modules.common.visual
 
 Rectangle {
   id: clock
-  // color: Appearance.colors.colLayer0
   color: Theme.Theme.widget
   radius: 15
 
   implicitWidth: 70
-  implicitHeight: implicitWidth * 2
+  implicitHeight: content.implicitHeight + 16
   Layout.fillWidth: true
-  Layout.alignment: Qt.AlignHCenter
-  Layout.preferredHeight: width * 2
 
   property bool hovered: false
   property bool pressed: false
@@ -31,27 +28,19 @@ Rectangle {
   }
 
   ColumnLayout {
+    id: content
     anchors.fill: parent
     anchors.margins: 8 // keeps content + separator off the rounded edges
-    spacing: 0
+    spacing: 6
 
-    // Top half: date
-    Item {
-      Layout.fillWidth: true
-      Layout.fillHeight: true // both halves fill → equal heights
-
-      Date {}
+    Date { 
+      date: systemClock.date
+      Layout.alignment: Qt.AlignHCenter
     }
 
     Separator {}
 
-    // Bottom half: time
-    Item {
-      Layout.fillWidth: true
-      Layout.fillHeight: true
-
-      Time {}
-    }
+    Time { Layout.alignment: Qt.AlignHCenter }
   }
 
   MouseArea {

@@ -15,8 +15,8 @@ Item {
     property color normalFillColor: Theme.Theme.battNormal
     property color lowFillColor: Theme.Theme.battLow
     property color chargingFillColor: Theme.Theme.battCharging
-    property color bgColor: Theme.Theme.bttnbg
-    property color textColor: Theme.Theme.battText
+    property color bgColor: Theme.Theme.background
+    property color textColor: Theme.Theme.text
     
     // Battery values
     property int batteryPercent: 100
@@ -141,7 +141,7 @@ Item {
                 id: icon
                 text: batteryStatus === "Charging" ? "󰚥" : ""
                 font.pixelSize: 14
-                font.family: "Adwaita Sans"
+                font.family: Theme.Theme.font
                 font.weight: 600
                 color: textColor
             }
@@ -149,7 +149,7 @@ Item {
             Text {
                 text: batteryPercent + "%"
                 font.pixelSize: 14
-                font.family: "Adwaita Sans"
+                font.family: Theme.Theme.font
                 font.weight: 600
                 color: textColor
             }

@@ -54,11 +54,19 @@ ColumnLayout {
     radius: 15
     color: Theme.Theme.widget
 
+    property bool hovered: false
+    property bool pressed: false
+
     implicitWidth: 70
     implicitHeight: implicitWidth
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
     Layout.preferredHeight: width / 2
+    
+    scale: pressed ? 0.985 : (systemp.hovered ? 1.05 : 1.0)
+    Behavior on scale {
+      NumberAnimation { duration: 90; easing.type: Easing.OutQuad }
+    }
 
     Row {
       anchors.centerIn: parent
@@ -91,8 +99,8 @@ ColumnLayout {
       anchors.fill: parent
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
-      onEntered: clock.hovered = true
-      onExited: clock.hovered = false
+      onEntered: systemp.hovered = true
+      onExited: systemp.hovered = false
     }
   }
 
@@ -102,11 +110,19 @@ ColumnLayout {
     radius: 15
     color: Theme.Theme.widget
 
+    property bool hovered: false
+    property bool pressed: false
+
     implicitWidth: 70
     implicitHeight: implicitWidth
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
     Layout.preferredHeight: width / 2
+
+    scale: pressed ? 0.985 : (cpuinfo.hovered ? 1.05 : 1.0)
+    Behavior on scale {
+      NumberAnimation { duration: 90; easing.type: Easing.OutQuad }
+    }
 
     Row {
       anchors.centerIn: parent
@@ -139,8 +155,8 @@ ColumnLayout {
       anchors.fill: parent
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
-      onEntered: clock.hovered = true
-      onExited: clock.hovered = false
+      onEntered: cpuinfo.hovered = true
+      onExited: cpuinfo.hovered = false
     }
   }
 
@@ -150,11 +166,19 @@ ColumnLayout {
     radius: 15
     color: Theme.Theme.widget
 
+    property bool hovered: false
+    property bool pressed: false
+
     implicitWidth: 70
     implicitHeight: implicitWidth
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
     Layout.preferredHeight: width / 2
+
+    scale: pressed ? 0.985 : (memusage.hovered ? 1.05 : 1.0)
+    Behavior on scale {
+      NumberAnimation { duration: 90; easing.type: Easing.OutQuad }
+    }
 
     Row {
       anchors.centerIn: parent
@@ -187,8 +211,8 @@ ColumnLayout {
       anchors.fill: parent
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
-      onEntered: clock.hovered = true
-      onExited: clock.hovered = false
+      onEntered: memusage.hovered = true
+      onExited: memusage.hovered = false
     }
   }
 }

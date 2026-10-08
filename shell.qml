@@ -8,6 +8,6 @@ ShellRoot {
   id: root
 
   Drawers {}
-  DesktopView {}
+  // DesktopView {}
   // AppListView {}
 }

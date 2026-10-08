@@ -17,9 +17,4 @@ Item {
   property bool connectionFound: false
   property string connectionType: "Unknown"
 
-  onConnectionFoundChanged: {
-    if (connectionType === "wifi") {
-
-    }
-  } 
 }

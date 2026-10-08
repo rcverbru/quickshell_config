@@ -5,6 +5,8 @@ import Quickshell.Io
 import qs.theme.common
 
 Singleton {
+  readonly property string font: "JetBrainsMono Nerd Font"
+
   // Main colors
   readonly property color background: CatppuccinMocha.base
   readonly property color border: CatppuccinMocha.blue
