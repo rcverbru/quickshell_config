@@ -7,11 +7,20 @@ import qs.modules.dashboard
 Rectangle {
   id: dashboard
 
-  implicitWidth: content.implicitWidth + 16
+  property bool open: false
+  clip: true                                         // hide the contents while it's short
+  implicitWidth: open ? content.implicitWidth + 32 : 0
+  Behavior on implicitWidth { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
+
+  // implicitWidth: content.implicitWidth + 16
+  // Behavior on implicitWidth {
+  //   NumberAnimation { duration: 450 }
+  // }
   implicitHeight: content.implicitHeight + 32
 
   topRightRadius: 20
   bottomRightRadius: 20
+
   property bool hovered: false
 
   color: Theme.Theme.background

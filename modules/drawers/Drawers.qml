@@ -65,7 +65,7 @@ Variants {
 
       Dashboard {
         id: dashboard
-        visible: sideBar.clockHovered || dashboard.hovered
+        open: sideBar.clockHovered || dashboard.hovered
         anchors.bottom: parent.bottom
         anchors.left: sideBar.right
       } 
@@ -73,7 +73,7 @@ Variants {
       ConcaveCurves {
         anchors.bottom: dashboard.top
         anchors.left: sideBar.right
-        visible: dashboard.visible
+        visible: dashboard.open
         radius: 20
         isTop: false
         z: 1
