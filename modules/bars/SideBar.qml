@@ -11,6 +11,8 @@ Item {
   id: root
   implicitWidth: Appearance.sizes.barWidth
 
+  readonly property bool clockHovered: datetime.hovered
+
   Rectangle {
     id: background
 
@@ -53,7 +55,9 @@ Item {
       //   anchors.horizontalCenter: parent.horizontalCenter
       // }
       SystemInfo {}
-      DateTime {}
+      DateTime {
+        id: datetime
+      }
     }
   }
 }

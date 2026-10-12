@@ -1,15 +1,13 @@
 import QtQuick
-import qs.modules.common
-import qs.theme as Theme
 import QtQuick.Shapes
 
 Shape {
   id: root
 
-  property int radius: 20
-  property color color: Theme.Theme.background
+  property int radius: 14
+  property color color: "#1e1e2d"
   property bool isTop: true
-  property bool mirrored: false
+  property bool mirrored: false   // true = horizontally flip (for right-side bars)
 
   implicitWidth: radius
   implicitHeight: radius
@@ -41,10 +39,11 @@ Shape {
 
     PathArc {
       x: root.isTop ? root.radius : 0
-      y: root.isTop ? 0 : 0 
+      y: root.isTop ? 0 : 0
       radiusX: root.radius
       radiusY: root.radius
-      direction: root.isTop ? PathArc.Clockwise : PathArc.Counterclockwise
     }
+
   }
+
 }

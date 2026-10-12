@@ -8,7 +8,9 @@ import qs.theme as Theme
 Rectangle {
     id: root
     radius: 14
-    color: Theme.Theme.widget
+    implicitHeight: 100
+    implicitWidth: 250
+    color: Theme.Theme.background
 
     // Expansion API
     property bool expanded: false
@@ -245,7 +247,7 @@ Rectangle {
                     opacity: 0.9
                     font.pixelSize: 24
                     font.weight: 300
-                    font.family: "Adwaita Sans"
+                    font.family: Theme.Theme.font
                 }
 
                 Text {
@@ -253,14 +255,14 @@ Rectangle {
                     color: Theme.Theme.text
                     font.pixelSize: 24
                     font.weight: 600
-                    font.family: "Adwaita Sans"
+                    font.family: Theme.Theme.font
                 }
 
                 Text {
                     text: root.cityLine
-                    color: Theme.Theme.accent
+                    color: Theme.Theme.subText
                     font.pixelSize: 12
-                    font.family: "Adwaita Sans"
+                    font.family: Theme.Theme.font
                     elide: Text.ElideRight
                 }
             }
@@ -314,7 +316,7 @@ Rectangle {
                     color: Theme.Theme.text
                     font.pixelSize: 16
                     font.weight: 500
-                    font.family: "Adwaita Sans"
+                    font.family: Theme.Theme.font
                     elide: Text.ElideRight
                 }
 
@@ -323,7 +325,7 @@ Rectangle {
                     color: Theme.Theme.text
                     font.pixelSize: 20
                     font.weight: 600
-                    font.family: "Adwaita Sans"
+                    font.family: Theme.Theme.font
                 }
 
                 Row {
@@ -336,16 +338,16 @@ Rectangle {
                         color: Theme.Theme.subText
                         font.pixelSize: 13
                         font.weight: 600
-                        font.family: "Adwaita Sans"
+                        font.family: Theme.Theme.font
                     }
 
                     Text {
                         text: root.condition || ""
                         visible: text.length > 0
-                        color: Theme.Theme.accent
+                        color: Theme.Theme.subText
                         font.pixelSize: 13
                         font.weight: 600
-                        font.family: "Adwaita Sans"
+                        font.family: Theme.Theme.font
                     }
                 }
             }
@@ -356,7 +358,7 @@ Rectangle {
                 anchors.top: headerCol.bottom
                 anchors.topMargin: 10
                 height: 1
-                color: Theme.Theme.bttnbg
+                color: Theme.Theme.background
                 opacity: 0.7
             }
 
@@ -388,7 +390,7 @@ Rectangle {
                                 anchors.right: parent.right
                                 anchors.bottom: parent.bottom
                                 height: root.sepH
-                                color: Theme.Theme.bttnbg
+                                color: Theme.Theme.background
                                 opacity: (index < (root.shownDays - 1)) ? 0.35 : 0.0
                             }
 
@@ -407,7 +409,7 @@ Rectangle {
                                     color: "#cdd6f4"
                                     font.pixelSize: 13
                                     font.weight: 700
-                                    font.family: "Adwaita Sans"
+                                    font.family: Theme.Theme.font
                                 }
 
                                 Item {
@@ -437,7 +439,7 @@ Rectangle {
                                     color: Theme.Theme.text
                                     font.pixelSize: 13
                                     font.weight: 700
-                                    font.family: "Adwaita Sans"
+                                    font.family: Theme.Theme.font
                                 }
 
                                 Text {
@@ -449,7 +451,7 @@ Rectangle {
                                     color: Theme.Theme.subText
                                     font.pixelSize: 13
                                     font.weight: 700
-                                    font.family: "Adwaita Sans"
+                                    font.family: Theme.Theme.font
                                 }
                             }
                         }

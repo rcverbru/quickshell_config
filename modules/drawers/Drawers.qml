@@ -2,6 +2,7 @@ import qs.modules.common
 import qs.modules.common.widgets
 import qs.modules.common.visual
 import qs.modules.bars
+import qs.modules.dashboard
 import qs.services
 import QtQuick
 import QtQuick.Layouts
@@ -24,6 +25,7 @@ Variants {
       mask: Region{
         Region { item: topBar }
         Region { item: sideBar }
+        Region { item: dashboard.visible ? dashboard : null }
       }
 
       anchors {
@@ -51,13 +53,6 @@ Variants {
         anchors.top: topBar.bottom
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-
-        MouseArea {
-          anchors.fill: parent
-          onClicked: {
-            isLeftMost(scope.modelData.name)
-          }
-        }
       }
 
       ConcaveCurves {
@@ -67,11 +62,23 @@ Variants {
         isTop: true
         z: 1
       }
-    }
-  }
 
-  function isLeftMost(monitors: list): void {
-    console.log("Monitors: " + monitors);
+      Dashboard {
+        id: dashboard
+        visible: sideBar.clockHovered || dashboard.hovered
+        anchors.bottom: parent.bottom
+        anchors.left: sideBar.right
+      } 
+
+      ConcaveCurves {
+        anchors.bottom: dashboard.top
+        anchors.left: sideBar.right
+        visible: dashboard.visible
+        radius: 20
+        isTop: false
+        z: 1
+      }
+    }
   }
 }
 

@@ -13,6 +13,7 @@ Singleton {
   readonly property color widget: CatppuccinMocha.surface0
   readonly property color text: CatppuccinMocha.text
   readonly property color subText: CatppuccinMocha.subtext0
+  readonly property color accent: CatppuccinMocha.lavender
 
   // Statuses
   readonly property color good: CatppuccinMocha.green

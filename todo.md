@@ -122,6 +122,25 @@ ShellRoot {
   - Full property list: headers in `~/quickshell/src/network/` (`qml.hpp`, `device.hpp`, `wifi.hpp`, `enums.hpp`).
 - Split: widget = display only; data from a service (rewrite `services/Network.qml` to wrap `Networking`) or bind to `Networking` directly.
 
+## Google Calendar in the dashboard (via waylandar)
+
+Goal: show Google Calendar events in our `modules/dashboard/Calendar.qml` (dots on days with events, plus an agenda list). Reference: **waylandar**, local clone at `/home/rcv/dev/sandbox/waylandar/` (github.com/samjoshuadud/waylandar). It's a standalone Quickshell calendar widget with a **Python backend** that supports Google, CalDAV/Nextcloud, iCloud, ICS feeds and local `.ics` dirs. It's read-only (no creating or editing events yet).
+
+**How waylandar is split (read in the clone, don't copy it in):**
+- `backend/`: Python, run with `uv` (`~/.local/bin/uv` is installed). `sync.py <year> <month> --background` fetches every enabled account and merges the results. It prints JSON to stdout **and** writes `~/.cache/waylandar/cache_<year>_<month>.json`. Setup is an interactive wizard: run `cd backend && uv run python sync.py` with no args.
+- Event shape (`backend/providers/google.py` ~line 173): `{ title, description, start, end, link, reminders, calendar_id, calendar_name, calendar_color, account_id }`. The top-level JSON is `{ events: [...], calendars: [...], errors?: [...] }`.
+- `frontend/`: its own QML (`dashboard.qml`, `widget.qml`, `components/`). It reads the backend two ways: a `Process` that runs `sync.py` and parses stdout (`StdioCollector`, dashboard.qml ~line 282), and a `FileView` on the cache file that reloads on `onTextChanged` (~line 266).
+- Config and secrets live outside our repo: `~/.config/waylandar/config.json`, `~/.config/waylandar/credentials.json` (your own Google OAuth client), and tokens in `~/.cache/waylandar/token_<id>.json`. **Never commit any of these.**
+
+**Plan:** use waylandar's backend as the data source and keep our own UI (same "service feeds a display-only widget" split as the Network and Weather notes):
+1. Google Cloud setup (README "Option B"): create a project, enable the Calendar API, create a Desktop OAuth client, and save the JSON to `~/.config/waylandar/credentials.json`. **Publish the consent screen**, because "Testing" mode expires the token every 7 days. Then run the wizard and log in.
+2. Check the backend on its own first: `uv run python sync.py 2026 10 --background` should print events.
+3. `services/Calendar.qml` singleton: a `Process` that runs the sync (on start + a `Timer`), plus a `FileView` on the month's cache file. Exposes something like `events` and `eventsOn(date)`.
+4. `Calendar.qml`: bind day cells to the service (a dot or color per `calendar_color`); add an agenda list (new file, e.g. `modules/dashboard/Agenda.qml`).
+5. Later: notifications for `reminders` (waylandar uses `notify-send`); months other than the current one (the cache file is per-month).
+
+**Open question:** where the backend lives. Pointing the `Process` at the sandbox clone is fine for experimenting. Long-term, install it properly (its `PKGBUILD`/`flake.nix` provide a `waylandar` command) so the shell doesn't depend on a sandbox path.
+
 ## Choices to make
 
 - ~~**Window architecture**~~ — **decided: caelestia-style Drawers** (see Next up). Fullscreen overlays like `DesktopView` can stay as their own windows.
