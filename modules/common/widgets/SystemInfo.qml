@@ -10,10 +10,16 @@ ColumnLayout {
   spacing: 8
 
   property string fontFamily: "JetBrainsMono Nerd Font"
+  property bool hovered: systemp.hovered || cpuinfo.hovered || memusage.hovered
   property int fontSize: 15
   property real cpuUsage: 0
   property real ramUsage: 0
   property int cpuTemp: 0
+
+  property int histLength: 30
+  property list<real> cpuHist: []
+  property list<real> memHist: []
+  property list<real> tempHist: []
 
   Process {
     id: sysInfoProc
@@ -33,8 +39,11 @@ ColumnLayout {
         const parts = data.trim().split(/\s+/);
         if (parts.length === 3) {
           root.cpuUsage = parseInt(parts[0]) || 0;
+          root.cpuHist = [...root.cpuHist, root.cpuUsage].slice(-root.histLength)
           root.ramUsage = parseInt(parts[1]) || 0;
+          root.memHist = [...root.memHist, root.ramUsage].slice(-root.histLength)
           root.cpuTemp = parseInt(parts[2]) || 0;
+          root.tempHist = [...root.tempHist, root.cpuTemp].slice(-root.histLength)
         }
       }
     }
@@ -55,7 +64,6 @@ ColumnLayout {
     color: Theme.Theme.widget
 
     property bool hovered: false
-    property bool pressed: false
 
     implicitWidth: 70
     implicitHeight: implicitWidth
@@ -63,7 +71,7 @@ ColumnLayout {
     Layout.alignment: Qt.AlignHCenter
     Layout.preferredHeight: width / 2
     
-    scale: pressed ? 0.985 : (systemp.hovered ? 1.05 : 1.0)
+    scale: systemp.hovered ? 1.05 : 1.0
     Behavior on scale {
       NumberAnimation { duration: 90; easing.type: Easing.OutQuad }
     }
@@ -111,7 +119,6 @@ ColumnLayout {
     color: Theme.Theme.widget
 
     property bool hovered: false
-    property bool pressed: false
 
     implicitWidth: 70
     implicitHeight: implicitWidth
@@ -119,7 +126,7 @@ ColumnLayout {
     Layout.alignment: Qt.AlignHCenter
     Layout.preferredHeight: width / 2
 
-    scale: pressed ? 0.985 : (cpuinfo.hovered ? 1.05 : 1.0)
+    scale: cpuinfo.hovered ? 1.05 : 1.0
     Behavior on scale {
       NumberAnimation { duration: 90; easing.type: Easing.OutQuad }
     }
@@ -167,7 +174,6 @@ ColumnLayout {
     color: Theme.Theme.widget
 
     property bool hovered: false
-    property bool pressed: false
 
     implicitWidth: 70
     implicitHeight: implicitWidth
@@ -175,7 +181,7 @@ ColumnLayout {
     Layout.alignment: Qt.AlignHCenter
     Layout.preferredHeight: width / 2
 
-    scale: pressed ? 0.985 : (memusage.hovered ? 1.05 : 1.0)
+    scale: memusage.hovered ? 1.05 : 1.0
     Behavior on scale {
       NumberAnimation { duration: 90; easing.type: Easing.OutQuad }
     }

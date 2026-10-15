@@ -12,6 +12,11 @@ Item {
   implicitWidth: Appearance.sizes.barWidth
 
   readonly property bool clockHovered: datetime.hovered
+  readonly property bool monitorHovered: systeminfo.hovered
+  readonly property real sysInfoCenter: botCluster.y + systeminfo.y + systeminfo.height / 2
+  readonly property list<real> cpuHist: systeminfo.cpuHist
+  readonly property list<real> memHist: systeminfo.memHist
+  readonly property list<real> tempHist: systeminfo.tempHist
 
   Rectangle {
     id: background
@@ -54,7 +59,11 @@ Item {
       // Battery {
       //   anchors.horizontalCenter: parent.horizontalCenter
       // }
-      SystemInfo {}
+
+      SystemInfo {
+        id: systeminfo
+      }
+
       DateTime {
         id: datetime
       }

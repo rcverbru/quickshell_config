@@ -3,6 +3,7 @@ import qs.modules.common.widgets
 import qs.modules.common.visual
 import qs.modules.bars
 import qs.modules.dashboard
+import qs.modules.monitors
 import qs.services
 import QtQuick
 import QtQuick.Layouts
@@ -26,6 +27,7 @@ Variants {
         Region { item: topBar }
         Region { item: sideBar }
         Region { item: dashboard.visible ? dashboard : null }
+        Region { item: monitor.visible ? monitor : null }
       }
 
       anchors {
@@ -63,6 +65,7 @@ Variants {
         z: 1
       }
 
+      // Dashboard
       Dashboard {
         id: dashboard
         open: sideBar.clockHovered || dashboard.hovered
@@ -73,9 +76,34 @@ Variants {
       ConcaveCurves {
         anchors.bottom: dashboard.top
         anchors.left: sideBar.right
-        visible: dashboard.open
-        radius: 20
+        radius: Math.min(20, dashboard.width)
         isTop: false
+        z: 1
+      }
+
+      // System Monitors
+      SystemMonitor {
+        id: monitor
+        // anchors.verticalCenter: sideBar.sysInfoCenter
+        y: sideBar.y + sideBar.sysInfoCenter - height / 2
+        open: sideBar.monitorHovered || monitor.hovered
+        // anchors.bottom: parent.bottom
+        anchors.left: sideBar.right
+      }
+
+      ConcaveCurves {
+        anchors.bottom: monitor.top
+        anchors.left: sideBar.right
+        radius: Math.min(20, monitor.width)
+        isTop: false
+        z: 1
+      }
+
+      ConcaveCurves {
+        anchors.top: monitor.bottom
+        anchors.left: sideBar.right
+        radius: Math.min(20, monitor.width)
+        isTop: true
         z: 1
       }
     }

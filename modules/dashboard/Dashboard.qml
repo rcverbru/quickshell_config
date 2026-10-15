@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.theme as Theme
-import qs.modules.dashboard
 
 Rectangle {
   id: dashboard

@@ -15,9 +15,8 @@ Rectangle {
   Layout.fillWidth: true
 
   property bool hovered: false
-  property bool pressed: false
 
-  scale: pressed ? 0.985 : (clock.hovered ? 1.03 : 1.0)
+  scale: clock.hovered ? 1.03 : 1.0
   Behavior on scale {
     NumberAnimation { duration: 90; easing.type: Easing.OutQuad }
   }
