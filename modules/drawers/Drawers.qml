@@ -84,11 +84,13 @@ Variants {
       // System Monitors
       SystemMonitor {
         id: monitor
-        // anchors.verticalCenter: sideBar.sysInfoCenter
         y: sideBar.y + sideBar.sysInfoCenter - height / 2
         open: sideBar.monitorHovered || monitor.hovered
-        // anchors.bottom: parent.bottom
         anchors.left: sideBar.right
+
+        cpuHist: sideBar.cpuHist
+        memHist: sideBar.memHist
+        tempHist: sideBar.tempHist
       }
 
       ConcaveCurves {

@@ -1,13 +1,14 @@
-// modules/monitors/Graph.qml
+// modules/common/widgets/Graph.qml
 import QtQuick
 import QtQuick.Shapes
+import qs.theme as Theme
 
 Item {
   id: root
   property var values: []          // e.g. [12, 40, 33, ...], newest last
   property real maxValue: 100 
   property int historyLength: 30
-  property color lineColor: "white"
+  property color lineColor: Theme.Theme.accent
 
   implicitWidth: 200
   implicitHeight: 60

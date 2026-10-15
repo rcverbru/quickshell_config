@@ -9,6 +9,10 @@ Rectangle {
 
   property bool hovered: false
   property bool open: false
+
+  property list<real> cpuHist: []
+  property list<real> memHist: []
+  property list<real> tempHist: []
   // cpuHistory = [...cpuHistory, cpuUsage].slice(-30)   // add newest, keep
 
   clip: true                                         // hide the contents while it's short
@@ -30,17 +34,17 @@ Rectangle {
     Graph {
       id: cpugraph
 
-      values: sideBar.cpuHist
+      values: monitors.cpuHist
     }
     Graph {
       id: memgraph
 
-      values: sideBar.memHist
+      values: monitors.memHist
     }
     Graph {
       id: tempgraph
 
-      values: sideBar.tempHist
+      values: monitors.tempHist
     }
   }
 
