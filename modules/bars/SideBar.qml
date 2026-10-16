@@ -1,3 +1,4 @@
+import qs.modules
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.theme as Theme
@@ -17,6 +18,7 @@ Item {
   readonly property list<real> cpuHist: systeminfo.cpuHist
   readonly property list<real> memHist: systeminfo.memHist
   readonly property list<real> tempHist: systeminfo.tempHist
+  readonly property string hoveredItem: systeminfo.hoveredItem
 
   Rectangle {
     id: background
@@ -34,6 +36,7 @@ Item {
       anchors.margins: 10
       spacing: 10
 
+      Workspaces {}
     }
 
     // Mid

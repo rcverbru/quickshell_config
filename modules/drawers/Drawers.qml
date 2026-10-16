@@ -91,6 +91,7 @@ Variants {
         cpuHist: sideBar.cpuHist
         memHist: sideBar.memHist
         tempHist: sideBar.tempHist
+        hoveredItem: sideBar.hoveredItem
       }
 
       ConcaveCurves {

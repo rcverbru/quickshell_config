@@ -13,6 +13,7 @@ Rectangle {
   property list<real> cpuHist: []
   property list<real> memHist: []
   property list<real> tempHist: []
+  property string hoveredItem
   // cpuHistory = [...cpuHistory, cpuUsage].slice(-30)   // add newest, keep
 
   clip: true                                         // hide the contents while it's short
@@ -26,27 +27,43 @@ Rectangle {
 
   color: Theme.Theme.background
 
-  ColumnLayout {
-    id: content
+  Rectangle {
+    radius: 20
+
+    implicitHeight: content.implicitHeight + 16
+    implicitWidth: content.implicitWidth + 16
+    color: Theme.Theme.widget
     anchors.centerIn: parent
-    spacing: 8
 
-    Graph {
-      id: cpugraph
+    ColumnLayout {
+      id: content
+      anchors.centerIn: parent
+      spacing: 8
 
-      values: monitors.cpuHist
-    }
-    Graph {
-      id: memgraph
+      Graph {
+        id: cpugraph
+        visible: hoveredItem === "cpu" ? true : false
 
-      values: monitors.memHist
-    }
-    Graph {
-      id: tempgraph
+        title: "CPU Usage"
+        values: monitors.cpuHist
+      }
+      Graph {
+        id: memgraph
+        visible: hoveredItem === "memory" ? true : false
 
-      values: monitors.tempHist
+        title: "Memory Usage"
+        values: monitors.memHist
+      }
+      Graph {
+        id: tempgraph
+        visible: hoveredItem === "temp" ? true : false
+
+        title: "CPU Temperature (°C)"
+        values: monitors.tempHist
+      }
     }
   }
+
 
   MouseArea {
     anchors.fill: parent

@@ -7,19 +7,25 @@ import qs.theme as Theme
 
 ColumnLayout {
   id: root
-  spacing: 8
 
+  // Appearance Things
+  spacing: 10
   property string fontFamily: "JetBrainsMono Nerd Font"
   property bool hovered: systemp.hovered || cpuinfo.hovered || memusage.hovered
   property int fontSize: 15
+  property int barPadding: 10
+
+  // Current numbers
   property real cpuUsage: 0
   property real ramUsage: 0
   property int cpuTemp: 0
 
+  // History stuff
   property int histLength: 30
   property list<real> cpuHist: []
   property list<real> memHist: []
   property list<real> tempHist: []
+  property string hoveredItem: ""
 
   Process {
     id: sysInfoProc
@@ -105,9 +111,11 @@ ColumnLayout {
 
     MouseArea {
       anchors.fill: parent
+      anchors.rightMargin: -root.barPadding
+      anchors.bottomMargin: -root.barPadding
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
-      onEntered: systemp.hovered = true
+      onEntered: { systemp.hovered = true; hoveredItem = "temp" }
       onExited: systemp.hovered = false
     }
   }
@@ -160,9 +168,11 @@ ColumnLayout {
 
     MouseArea {
       anchors.fill: parent
+      anchors.rightMargin: -root.barPadding
+      anchors.bottomMargin: -root.barPadding
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
-      onEntered: cpuinfo.hovered = true
+      onEntered: { cpuinfo.hovered = true; hoveredItem = "cpu" }
       onExited: cpuinfo.hovered = false
     }
   }
@@ -215,9 +225,10 @@ ColumnLayout {
 
     MouseArea {
       anchors.fill: parent
+      anchors.rightMargin: -root.barPadding
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
-      onEntered: memusage.hovered = true
+      onEntered: { memusage.hovered = true; hoveredItem = "memory" }
       onExited: memusage.hovered = false
     }
   }

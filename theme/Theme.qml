@@ -15,14 +15,17 @@ Singleton {
   readonly property color subText: CatppuccinMocha.subtext0
   readonly property color accent: CatppuccinMocha.lavender
 
+  readonly property color active: CatppuccinMocha.blue
+  readonly property color yes: CatppuccinMocha.mauve
+
   // Statuses
   readonly property color good: CatppuccinMocha.green
   readonly property color mid: CatppuccinMocha.yellow
   readonly property color bad: CatppuccinMocha.red
 
   // Battery
-  readonly property color battNormal: Battery.dustyGrape
-  readonly property color battCharging: Battery.charging
-  readonly property color battLow: Battery.low
-  readonly property color battText: CatppuccinMocha.text
+  readonly property color battNormal: CatppuccinMocha.green
+  readonly property color battCharging: CatppuccinMocha.green
+  readonly property color battLow: CatppuccinMocha.red
+  readonly property color battText: CatppuccinMocha.base
 }

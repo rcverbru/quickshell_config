@@ -16,7 +16,7 @@ Item {
     property color lowFillColor: Theme.Theme.battLow
     property color chargingFillColor: Theme.Theme.battCharging
     property color bgColor: Theme.Theme.background
-    property color textColor: Theme.Theme.text
+    property color textColor: Theme.Theme.battText
     
     // Battery values
     property int batteryPercent: 100
