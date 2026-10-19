@@ -44,6 +44,7 @@ Rectangle {
 
   MouseArea {
     anchors.fill: parent
+    anchors.rightMargin: -10
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
     onEntered: clock.hovered = true

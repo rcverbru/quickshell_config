@@ -12,6 +12,7 @@ Singleton {
   readonly property color low: "#F72C25"
   readonly property color text: "#BDD5EA"
 
+  // Color testing
   readonly property color burntTangerine: "#e70e02"
   readonly property color jungleTeal: "#4D9078"
   readonly property color mossGreen: "#5FAD56"

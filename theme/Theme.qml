@@ -15,8 +15,8 @@ Singleton {
   readonly property color subText: CatppuccinMocha.subtext0
   readonly property color accent: CatppuccinMocha.lavender
 
-  readonly property color active: CatppuccinMocha.blue
-  readonly property color yes: CatppuccinMocha.mauve
+  readonly property color active: CatppuccinMocha.mauve
+  readonly property color available: CatppuccinMocha.blue
 
   // Statuses
   readonly property color good: CatppuccinMocha.green

@@ -65,6 +65,7 @@ Variants {
         z: 1
       }
 
+      // START OF DRAWERS
       // Dashboard
       Dashboard {
         id: dashboard
@@ -108,6 +109,13 @@ Variants {
         radius: Math.min(20, monitor.width)
         isTop: true
         z: 1
+      }
+
+      // Side Pane
+      Rectangle {
+        anchors.top: topBar.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: sideBar.right
       }
     }
   }

@@ -52,8 +52,8 @@ Item {
         fillColor: "transparent"
         PathPolyline {
           path: root.values.map((v, i) => Qt.point(
-            i * plot.width / (root.historyLength - 1),     // spread across the width 
-            plot.height - (v / root.maxValue) * plot.height // 0 at bottom, max at top
+            i * plot.width / (root.historyLength - 1),
+            plot.height - (v / root.maxValue) * plot.height
           ))
         }
       }
