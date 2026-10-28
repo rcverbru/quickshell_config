@@ -26,8 +26,8 @@ Variants {
       mask: Region{
         Region { item: topBar }
         Region { item: sideBar }
-        Region { item: dashboard.visible ? dashboard : null }
-        Region { item: monitor.visible ? monitor : null }
+        Region { item: dashboard }
+        Region { item: monitor }
       }
 
       anchors {

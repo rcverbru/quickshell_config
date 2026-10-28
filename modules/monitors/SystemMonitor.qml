@@ -14,9 +14,8 @@ Rectangle {
   property list<real> memHist: []
   property list<real> tempHist: []
   property string hoveredItem
-  // cpuHistory = [...cpuHistory, cpuUsage].slice(-30)   // add newest, keep
 
-  clip: true                                         // hide the contents while it's short
+  clip: true
   implicitWidth: open ? content.implicitWidth + 32 : 0
   Behavior on implicitWidth { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 

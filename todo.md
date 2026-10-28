@@ -63,7 +63,8 @@ Current monitor layout (`hyprctl monitors`): left Philips x=0 (3440×1440) | `eD
 
 **Key mechanics:**
 - **Mask:** `mask: Region { Region { item: topBar }; Region { item: sideBar } }` — child regions combine; everything outside passes clicks through to apps. Open dropdowns must be in the mask too, or they won't take input.
-- **Sidebar on the outermost edge (option 1 — chosen):** `readonly property bool isLeftmost: modelData.x === Math.min(...Quickshell.screens.map(s => s.x))`. Reactive to hotplug: docked → `DP-6`'s left edge; laptop-only → `eDP-1`. (Rejected: "each screen's non-touching edge" — `eDP-1` has neighbours on both sides; "follow focused monitor" — jumpy.)
+- **Back burner (2026-10-19): sidebar on every screen is fine for now.** Ryan tried it on all monitors and likes it, so `isLeftmost` is parked. If it's ever revisited, the plan below still applies.
+- **Sidebar on the outermost edge (option 1 — parked):** `readonly property bool isLeftmost: modelData.x === Math.min(...Quickshell.screens.map(s => s.x))`. Reactive to hotplug: docked → `DP-6`'s left edge; laptop-only → `eDP-1`. (Rejected: "each screen's non-touching edge" — `eDP-1` has neighbours on both sides; "follow focused monitor" — jumpy.)
 - **Hover dropdowns across files:** `id`s don't cross files, so `TopBar` exposes state (e.g. `property string hoveredItem`) and `Drawers` binds siblings to it: `SomeDropdown { open: topBar.hoveredItem === "battery" }`. State lives per-window in `Drawers`, not in `GlobalStates` (each screen has its own dropdowns).
 
 **How apps are kept out from under the bars (caelestia's `Exclusions.qml`, *not* `Panels.qml`):**
@@ -76,13 +77,13 @@ Current monitor layout (`hyprctl monitors`): left Philips x=0 (3440×1440) | `eD
 **Remaining fixes from review (2026-09-29):**
 - `Drawers.qml`: remove leftover `implicitHeight: Appearance.sizes.barHeight` on the fullscreen window.
 - `SideBar.qml`: width is hardcoded `implicitWidth: 100` — add `barWidth` to `Appearance.sizes` and use it (the exclusion zone needs the same value). Its `ColumnLayout` still anchors `left`/`verticalCenter`; for a vertical bar anchor `top` + `horizontalCenter`.
-- `SideBar` shows on every screen — add `isLeftmost`.
-- `Drawers.qml` `isLeftMost` stub (found 2026-10-06): the `SideBar` `MouseArea` calls `isLeftMost(scope.modelData.name)`, passing one string into `function isLeftMost(monitors: list)`, so the type doesn't match. Also, deciding "leftmost" from the screen's **name** won't work, because names change on replug (see monitor layout above). Use position (`modelData.x`, as planned in Key mechanics) and make it a `readonly property bool` binding rather than a function called on click, so it updates on hotplug by itself.
+- ~~`SideBar` shows on every screen — add `isLeftmost`.~~ Parked 2026-10-19: keeping the sidebar on every screen.
+- ~~`Drawers.qml` `isLeftMost` stub~~ (removed from the code; note kept for if `isLeftmost` comes back, found 2026-10-06): the `SideBar` `MouseArea` calls `isLeftMost(scope.modelData.name)`, passing one string into `function isLeftMost(monitors: list)`, so the type doesn't match. Also, deciding "leftmost" from the screen's **name** won't work, because names change on replug (see monitor layout above). Use position (`modelData.x`, as planned in Key mechanics) and make it a `readonly property bool` binding rather than a function called on click, so it updates on hotplug by itself.
 - Delete `modules/dashboard/Content.qml` (caelestia copy, can't run here; reference it in the clone instead — `modules/dashboard/Content.qml` there).
 
 **Suggested order:**
 1. ~~Create `Drawers.qml` with the fullscreen masked window; convert `TopBar` to an `Item` inside it.~~ Done — verify clicks still reach apps everywhere except the bars.
-2. `SideBar` added — still needs `isLeftmost` + `barWidth`.
+2. ~~`SideBar` added~~ Done (`barWidth` in `Appearance`). `isLeftmost` parked: sidebar stays on every screen.
 3. Add `Exclusions.qml` so apps stop going under the bar/sidebar (restructure the `Variants` delegate into a `Scope` first).
 4. First hover dropdown (e.g. battery or the dashboard — see "Dashboard holder" below).
 5. Rounded frame corners where bar and sidebar meet.
@@ -141,6 +142,37 @@ Goal: show Google Calendar events in our `modules/dashboard/Calendar.qml` (dots 
 
 **Open question:** where the backend lives. Pointing the `Process` at the sandbox clone is fine for experimenting. Long-term, install it properly (its `PKGBUILD`/`flake.nix` provide a `waylandar` command) so the shell doesn't depend on a sandbox path.
 
+## Replace Waybar with qs at startup
+
+Waybar is still the default bar. The Hyprland config is **KooL Hyprland-Dots (Lua)**: system files live in `~/.config/hypr/lua/`, `configs/` and `scripts/`, and user overrides in `~/.config/hypr/UserConfigs/`. A KooL update can overwrite system files, so put our changes in `UserConfigs/` where possible and note any system-file edits here. `~/.config/hypr` is not a git repo, so back up a file before editing it.
+
+**Where Waybar gets started (checked 2026-10-19):**
+- **Login:** `lua/startup.lua` line 45, chained with other startup steps: `ApplyThemeMode.sh && WallpaperDaemon.sh && WaybarStartup.sh`. Remove only the `&& .../WaybarStartup.sh` part, because the theme and wallpaper steps are still needed. `WaybarStartup.sh` has no "skip" flag. (`waybar.service` is already `masked`, so systemd isn't the problem; the script launches it directly.)
+- **Restarts:** `scripts/Refresh.sh` calls `restart_waybar` (lines 106–130), which kills and relaunches Waybar every time it runs. `Refresh.sh` is called by:
+  - `SUPER ALT R` (`lua/keybinds.lua:81`)
+  - `ThemeChanger.sh` (`SUPER T`)
+  - `DarkLight.sh`
+  - `WallpaperSelect.sh`, `WallpaperRandom.sh`
+  - `GameMode.sh`
+  - `Kool_Quick_Settings.sh`
+  - `Toggle-weather-waybar-units.sh`, `WaybarLayout.sh`, `WaybarStyles.sh`
+
+  So changing the theme or wallpaper brings Waybar back. `RefreshNoWaybar.sh` (used by `Animations.sh`, `MonitorProfiles.sh`, `WallpaperAutoChange.sh`) doesn't.
+- **Harmless:** `ThemeChanger.sh:340`, `DarkLight.sh:516` and `HyprLayoutModule.sh:153` only send reload signals to a Waybar that's already running. They do nothing once it's gone.
+- **Waybar keybinds** in `lua/keybinds.lua:128–130`: `SUPER CTRL ALT B` toggles the bar, `SUPER CTRL B` opens the styles menu, `SUPER ALT B` opens the layout menu. Remove them, or repoint the toggle to a `qs ipc` call later.
+
+**qs side:**
+- Add a start line in `UserConfigs/user_startup.lua` with its `exec_once("...")` helper (examples are at the bottom of that file). Use the full wrapper path, `$HOME/.local/bin/qs`, because the nixGL wrapper is required.
+- `Refresh.sh` and `RefreshNoWaybar.sh` (line 42/38) run `pkill qs && qs …`. The running process is called `quickshell` (`~/quickshell/build/src/quickshell`), not `qs`, so `pkill qs` matches nothing and the relaunch after `&&` never runs. Today that means a refresh leaves our shell alone, which is fine. If those lines are ever "fixed", make sure they don't kill or duplicate our shell.
+- `lua/startup.lua` lines 56–57 start two other qs configs, `-c overview` and `-p ~/.config/quickshell/qs-hyprview`. Neither folder exists under `~/.config/quickshell/` anymore, so they probably fail silently. Check whether they're still wanted.
+
+**Order** (sidebar-on-every-screen is the chosen layout, so nothing blocks this):
+1. add the qs start line
+2. remove WaybarStartup from login
+3. stop `Refresh.sh` from restarting Waybar: comment out the `restart_waybar` call on line 130, the smallest change
+4. clean up the Waybar keybinds
+5. reboot and check
+
 ## Choices to make
 
 - ~~**Window architecture**~~ — **decided: caelestia-style Drawers** (see Next up). Fullscreen overlays like `DesktopView` can stay as their own windows.
@@ -148,7 +180,7 @@ Goal: show Google Calendar events in our `modules/dashboard/Calendar.qml` (dots 
 - **Where bar widgets live:** `Battery.qml` and `Network.qml` are in `modules/common/widgets/`; hyprstar keeps bar widgets in `modules/`. Consider `modules/bars/widgets/` now that the bars have their own folder.
 - **State model:** partly decided — bar dropdown state lives per-screen inside `Drawers`. `GlobalStates` stays for IPC-toggled overlays (`DesktopView`, etc.).
 - **Whether Quickshell draws the wallpaper** (`modules/background/Wallpaper.qml`) or the current per-monitor rofi setup keeps doing it.
-- **Retire Waybar** — still running above the Quickshell bar. Once Drawers + Exclusions work, remove it from Hyprland autostart.
+- **Retire Waybar** — decided; plan is under "Replace Waybar with qs at startup".
 
 ## Needs review
 
